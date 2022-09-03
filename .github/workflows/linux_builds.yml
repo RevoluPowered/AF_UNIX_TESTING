@@ -26,3 +26,26 @@ jobs:
       - name: Run tests
         run: |
           ./build/ipc_tests
+
+  build-linux-scons:
+    name: SCons compile and test
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -qq python3
+          python3 -c "import sys; print(sys.version)"
+          python3 -m pip install scons
+          scons --version
+
+      - name: SCons build
+        run: |
+          scons
+
+      - name: Run tests
+        run: |
+          ./build/ipc_tests
